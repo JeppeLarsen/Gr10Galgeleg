@@ -14,7 +14,7 @@ public class GalgeKonsol {
     public void spil() throws Exception{
 
         SpilI brugeraut = (SpilI) Naming.lookup("rmi://localhost:1099/spil");
-        brugeraut.startSpil("Jeppe", "Mads");
+        brugeraut.startSpil("s170185", "Bamsefar");
 
         GalgeI spil =(GalgeI) Naming.lookup("rmi://localhost:1099/galgeleg");
 

@@ -1,5 +1,6 @@
 package galgeleg.server;
 
+import galgeleg.brugerhåndtering.Brugeradmin;
 import galgeleg.logik.Galgelogik;
 
 import java.rmi.Naming;
@@ -21,10 +22,13 @@ public class Spil extends UnicastRemoteObject implements SpilI {
     @Override
     public void startSpil(String brugernavn, String adgangskode) throws Exception {
 
+        System.setProperty("java.rmi.server.hostname", "javabog.dk");
+        Brugeradmin ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
 
-        if (brugernavn.equals("Jeppe") && adgangskode.equals("Mads")) {
+        try {
+            ba.hentBruger(brugernavn, adgangskode);
+
             erBrugerAutoriseret = true;
-
 
             System.out.println("Bruger er autoriseret!");
 
@@ -33,9 +37,12 @@ public class Spil extends UnicastRemoteObject implements SpilI {
             System.out.println("Galgeleg registreret.");
 
 
-        } else {
+        } catch (Exception e) {
+            System.out.println("Bruger ikke autoriseret");
             erBrugerAutoriseret = false;
+
         }
+
 
     }
 
