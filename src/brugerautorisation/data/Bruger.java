@@ -1,4 +1,4 @@
-package galgeleg.brugerhåndtering;
+package brugerautorisation.data;
 
 import java.io.*;
 import java.util.HashMap;

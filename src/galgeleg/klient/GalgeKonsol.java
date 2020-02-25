@@ -11,15 +11,22 @@ public class GalgeKonsol {
     boolean erSpilVundet = false;
 
 
-    public void spil() throws Exception{
+    public void spil() throws Exception {
+        Scanner input = new Scanner(System.in);
 
-        SpilI brugeraut = (SpilI) Naming.lookup("rmi://localhost:1099/spil");
-        brugeraut.startSpil("s170185", "Bamsefar");
+        System.out.println("Hej. Galgeleg er sjovt. Indtast brugernavn:");
+        String bruger = input.nextLine();
 
-        GalgeI spil =(GalgeI) Naming.lookup("rmi://localhost:1099/galgeleg");
+        System.out.println("Indtast kode:");
+        String kode = input.nextLine();
+
+        SpilI spil = (SpilI) Naming.lookup("rmi://localhost:1099/spil");
+        spil.startSpil(bruger, kode);
+
+        GalgeI galgeleg = (GalgeI) Naming.lookup("rmi://localhost:1099/galgeleg");
 
         // setup
-        spil.nulstil();
+        galgeleg.nulstil();
 
 //        try {
 //            spil.hentOrdFraDr();
@@ -27,19 +34,13 @@ public class GalgeKonsol {
 //            e.printStackTrace();
 //        }
 
-        System.out.println("Hej. Galgeleg er sjovt. Indtast brugernavn efterfulgt af kodeord.");
 
-        // brugerautorisation
-        // TODO: brugerautorisation
-
-        // kør spil
-        Scanner input = new Scanner(System.in);
         String gæt;
 
         while (!erSpilVundet) {
             System.out.println("Ok, PLACEHOLDER. Gæt ordet eller dø:");
-            System.out.println(spil.getSynligtOrd());
-            System.out.println("CHEATZ: " + spil.getOrdet());
+            System.out.println(galgeleg.getSynligtOrd());
+            System.out.println("CHEATZ: " + galgeleg.getOrdet());
             System.out.println("Gæt: ");
             System.out.println();
 
@@ -50,9 +51,9 @@ public class GalgeKonsol {
                 gæt = input.next();
             }
 
-            spil.gætBogstav(gæt);
+            galgeleg.gætBogstav(gæt);
 
-            if (spil.erSpilletSlut() == true) {
+            if (galgeleg.erSpilletSlut() == true) {
                 erSpilVundet = true;
 
                 System.out.println("Spillet er slut.");

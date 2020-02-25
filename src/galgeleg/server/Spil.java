@@ -1,13 +1,14 @@
 package galgeleg.server;
 
-import galgeleg.brugerhåndtering.Brugeradmin;
+import brugerautorisation.transport.rmi.Brugeradmin;
 import galgeleg.logik.Galgelogik;
 
 import java.rmi.Naming;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class Spil extends UnicastRemoteObject implements SpilI {
+public class Spil extends UnicastRemoteObject implements SpilI{
 
     protected Spil() throws RemoteException {
     }
@@ -22,7 +23,6 @@ public class Spil extends UnicastRemoteObject implements SpilI {
     @Override
     public void startSpil(String brugernavn, String adgangskode) throws Exception {
 
-        System.setProperty("java.rmi.server.hostname", "javabog.dk");
         Brugeradmin ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
 
         try {

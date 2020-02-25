@@ -1,4 +1,6 @@
-package galgeleg.brugerhåndtering;
+package brugerautorisation.transport.rmi;
+
+import brugerautorisation.data.Bruger;
 
 @SuppressWarnings("NonAsciiCharacters")
 public interface Brugeradmin extends java.rmi.Remote {
@@ -24,9 +26,9 @@ public interface Brugeradmin extends java.rmi.Remote {
      * @param tekst      Brødteksten - teksten 'Sendt fra xxxx ' bliver tilføjet  i mailen
      * @throws java.rmi.RemoteException Hvis der sker en fejl i transport eller på serveren
      */
-    void sendEmail(String brugernavn, String adgangskode, String emne, String tekst) throws java.rmi.RemoteException;
+    //void sendEmail(String brugernavn, String adgangskode, String emne, String tekst) throws java.rmi.RemoteException;
 
-    void sendGlemtAdgangskodeEmail(String brugernavn, String følgetekst) throws java.rmi.RemoteException;
+   // void sendGlemtAdgangskodeEmail(String brugernavn, String følgetekst) throws java.rmi.RemoteException;
 
     /**
      * Giver mulighed for at gemme et ekstra felt for brugeren. Det kunne f.eks. være at en Galgeleg-backend ønskede at gemme hvor mange point brugeren har, til en highscoreliste
