@@ -88,7 +88,19 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeI {
         ordet = muligeOrd.get(new Random().nextInt(muligeOrd.size()));
         opdaterSynligtOrd();
     }
-
+    private void opdaterSynligtOrd() {
+        synligtOrd = "";
+        spilletErVundet = true;
+        for (int n = 0; n < ordet.length(); n++) {
+            String bogstav = ordet.substring(n, n + 1);
+            if (brugteBogstaver.contains(bogstav)) {
+                synligtOrd = synligtOrd + bogstav;
+            } else {
+                synligtOrd = synligtOrd + "*";
+                spilletErVundet = false;
+            }
+        }
+    }
 
     @Override
     public void gætBogstav(String bogstav) throws java.rmi.RemoteException {
