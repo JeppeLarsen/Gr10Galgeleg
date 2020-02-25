@@ -1,7 +1,8 @@
-package galgeleg;
+package galgeleg.server;
+
+import galgeleg.logik.Galgelogik;
 
 import java.rmi.Naming;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 

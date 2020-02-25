@@ -1,4 +1,4 @@
-package galgeleg;
+package galgeleg.server;
 
 
 import java.rmi.Naming;

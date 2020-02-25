@@ -1,4 +1,6 @@
-package galgeleg;
+package galgeleg.logik;
+
+import galgeleg.server.GalgeI;
 
 import java.io.BufferedReader;
 import java.io.IOException;

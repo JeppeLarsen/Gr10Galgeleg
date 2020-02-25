@@ -1,4 +1,7 @@
-package galgeleg;
+package galgeleg.klient;
+
+import galgeleg.server.BrugerautorisationI;
+import galgeleg.server.GalgeI;
 
 import java.rmi.Naming;
 import java.util.Scanner;

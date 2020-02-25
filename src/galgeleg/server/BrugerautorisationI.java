@@ -1,4 +1,4 @@
-package galgeleg;
+package galgeleg.server;
 
 public interface BrugerautorisationI extends java.rmi.Remote {
 

@@ -1,4 +1,4 @@
-package galgeleg;
+package galgeleg.klient;
 
 public class BenytGalgelegModServer {
 
