@@ -1,5 +1,9 @@
 package galgeleg;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -121,6 +125,17 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeI {
         if (spilletErVundet) System.out.println("- SPILLET ER VUNDET");
         System.out.println("---------- ");
     }
+  public static String hentUrl(String url) throws IOException {
+    System.out.println("Henter data fra " + url);
+    BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
+    StringBuilder sb = new StringBuilder();
+    String linje = br.readLine();
+    while (linje != null) {
+      sb.append(linje + "\n");
+      linje = br.readLine();
+    }
+    return sb.toString();
+  }
 
 
     /**
@@ -128,8 +143,14 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeI {
      */
     @Override
     public void hentOrdFraDr() throws java.rmi.RemoteException {
-        String data = hentUrl("https://dr.dk");
-        //System.out.println("data = " + data);
+
+      String data = null;
+      try {
+        data = hentUrl("https://dr.dk");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      //System.out.println("data = " + data);
 
         data = data.substring(data.indexOf("<body")). // fjern headere
                 replaceAll("<.+?>", " ").toLowerCase(). // fjern tags
@@ -162,13 +183,18 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeI {
      */
 
     @Override
-    public void hentOrdFraRegneark(String sværhedsgrader) throws Exception {
+    public void hentOrdFraRegneark(String sværhedsgrader) throws java.rmi.RemoteException {
         String id = "1RnwU9KATJB94Rhr7nurvjxfg09wAHMZPYB3uySBPO6M";
 
         System.out.println("Henter data som kommasepareret CSV fra regnearket https://docs.google.com/spreadsheets/d/" + id + "/edit?usp=sharing");
 
-        String data = hentUrl("https://docs.google.com/spreadsheets/d/" + id + "/export?format=csv&id=" + id);
-        int linjeNr = 0;
+      String data = null;
+      try {
+        data = hentUrl("https://docs.google.com/spreadsheets/d/" + id + "/export?format=csv&id=" + id);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      int linjeNr = 0;
 
         muligeOrd.clear();
         for (String linje : data.split("\n")) {
