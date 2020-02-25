@@ -1,15 +1,15 @@
 package galgeleg;
 
+import java.rmi.Naming;
 import java.util.Scanner;
 
 public class GalgeKonsol {
 
     boolean erSpilVundet = false;
-    boolean korrektLogin;
-    String brugernavn, kode;
 
-    public void spil() {
-        Galgelogik spil = new Galgelogik();
+
+    public void spil() throws Exception{
+        GalgeI spil =(GalgeI) Naming.lookup("rmi://localhost:1099/galgeleg");
 
         // setup
         spil.nulstil();
