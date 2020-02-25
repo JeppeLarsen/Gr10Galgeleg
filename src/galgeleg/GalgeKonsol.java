@@ -9,6 +9,10 @@ public class GalgeKonsol {
 
 
     public void spil() throws Exception{
+
+        BrugerautorisationI brugeraut = (BrugerautorisationI) Naming.lookup("rmi://localhost:1099/brugeraut");
+        brugeraut.autoriserBruger("Jeppe", "Mads");
+
         GalgeI spil =(GalgeI) Naming.lookup("rmi://localhost:1099/galgeleg");
 
         // setup
