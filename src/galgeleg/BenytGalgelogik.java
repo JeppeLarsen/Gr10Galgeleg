@@ -1,10 +1,12 @@
 package galgeleg;
 
+import java.rmi.Naming;
+
 public class BenytGalgelogik {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
 
-    Galgelogik spil = new Galgelogik();
+    GalgeI spil =(GalgeI) Naming.lookup("rmi://localhost:1099/galgeleg");
     spil.nulstil();
     // Kommentér ind for at hente ord fra DR
     /*
@@ -16,13 +18,13 @@ public class BenytGalgelogik {
     */
 
     // Kommentér ind for at hente ord fra et online regneark
-    /*
+
     try {
       spil.hentOrdFraRegneark("12");
     } catch (Exception e) {
       e.printStackTrace();
     }
-    */
+
     spil.logStatus();
 
     spil.gætBogstav("e");

@@ -28,8 +28,6 @@ public interface GalgeI extends Remote, Serializable {
 
     void nulstil() throws java.rmi.RemoteException;
 
-    default void opdaterSynligtOrd() throws java.rmi.RemoteException {
-    }
 
     void gætBogstav(String bogstav) throws java.rmi.RemoteException;
 
