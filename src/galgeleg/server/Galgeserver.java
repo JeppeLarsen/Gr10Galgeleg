@@ -11,8 +11,10 @@ public class Galgeserver {
         // Enten: Kør programmet 'rmiregistry' fra mappen med .class-filerne, eller:
         java.rmi.registry.LocateRegistry.createRegistry(1099); // start i server-JVM
 
-        Brugerautorisation brugerautorisation = new Brugerautorisation();
-        Naming.rebind("rmi://localhost:1099/brugeraut", brugerautorisation);
+
+        Spil spil = new Spil();
+        Naming.rebind("rmi://localhost:1099/spil", spil);
+
 
     }
 

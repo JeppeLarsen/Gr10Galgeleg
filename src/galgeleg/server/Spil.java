@@ -6,9 +6,9 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class Brugerautorisation extends UnicastRemoteObject implements BrugerautorisationI {
+public class Spil extends UnicastRemoteObject implements SpilI {
 
-    protected Brugerautorisation() throws RemoteException {
+    protected Spil() throws RemoteException {
     }
 
     private boolean erBrugerAutoriseret;
@@ -19,7 +19,7 @@ public class Brugerautorisation extends UnicastRemoteObject implements Brugeraut
 
 
     @Override
-    public void autoriserBruger(String brugernavn, String adgangskode) throws Exception {
+    public void startSpil(String brugernavn, String adgangskode) throws Exception {
 
 
         if (brugernavn.equals("Jeppe") && adgangskode.equals("Mads")) {
@@ -31,7 +31,6 @@ public class Brugerautorisation extends UnicastRemoteObject implements Brugeraut
             Galgelogik galgelogik = new Galgelogik();
             Naming.rebind("rmi://localhost:1099/galgeleg", galgelogik);
             System.out.println("Galgeleg registreret.");
-
 
 
         } else {

@@ -1,6 +1,6 @@
 package galgeleg.klient;
 
-import galgeleg.server.BrugerautorisationI;
+import galgeleg.server.SpilI;
 import galgeleg.server.GalgeI;
 
 import java.rmi.Naming;
@@ -13,8 +13,8 @@ public class GalgeKonsol {
 
     public void spil() throws Exception{
 
-        BrugerautorisationI brugeraut = (BrugerautorisationI) Naming.lookup("rmi://localhost:1099/brugeraut");
-        brugeraut.autoriserBruger("Jeppe", "Mads");
+        SpilI brugeraut = (SpilI) Naming.lookup("rmi://localhost:1099/spil");
+        brugeraut.startSpil("Jeppe", "Mads");
 
         GalgeI spil =(GalgeI) Naming.lookup("rmi://localhost:1099/galgeleg");
 
