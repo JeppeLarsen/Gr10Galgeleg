@@ -10,6 +10,7 @@ import io.javalin.http.Context;
 import static io.javalin.apibuilder.ApiBuilder.before;
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.apibuilder.ApiBuilder.put;
 
 import java.util.TreeMap;
 
@@ -31,9 +32,9 @@ public class GalgeRESTServer {
                     + " på " + ctx.url()
                     + " med query " + ctx.queryParamMap()));
             get("/spil", ctx -> getAlleSpil(ctx));
-            get("/spil/nyt", ctx -> nytSpil(ctx));
             get("/spil/:id", ctx -> getSpil(ctx));
-            post("/spil/:id", ctx -> lavGæt(ctx));
+            post("/spil", ctx -> nytSpil(ctx));
+            put("/spil/:id", ctx -> lavGæt(ctx));
         });
     }
 
@@ -48,6 +49,15 @@ public class GalgeRESTServer {
         ctx.json(aktiveSpilTilstande);
     }
 
+    private static void getSpil(Context ctx) throws Exception {
+        // Få ID'et fra URL'en og hent det relevante spil
+        Integer ID = Integer.parseInt(ctx.pathParam("id"));
+
+        SpilInfo spilInfo = getSpilTilstandSomObjekt(ID);
+
+        ctx.json(spilInfo);
+    }
+
     private static void nytSpil(Context ctx) throws Exception {
         GalgeI galgelogik = new Galgelogik();
         aktiveSpil.put(nextID, galgelogik);
@@ -56,15 +66,6 @@ public class GalgeRESTServer {
         ctx.result(nextID.toString());
 
         nextID++;
-    }
-
-    private static void getSpil(Context ctx) throws Exception {
-        // Få ID'et fra URL'en og hent det relevante spil
-        Integer ID = Integer.parseInt(ctx.pathParam("id"));
-
-        SpilInfo spilInfo = getSpilTilstandSomObjekt(ID);
-
-        ctx.json(spilInfo);
     }
 
     private static void lavGæt(Context ctx) throws Exception {
