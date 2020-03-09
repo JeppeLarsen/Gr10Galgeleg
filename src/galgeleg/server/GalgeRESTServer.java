@@ -33,10 +33,8 @@ public class GalgeRESTServer {
             get("/spil", ctx -> getAlleSpil(ctx));
             get("/spil/nyt", ctx -> nytSpil(ctx));
             get("/spil/:id", ctx -> getSpil(ctx));
-            post("spil/:id", ctx -> lavGæt(ctx));
+            post("/spil/:id", ctx -> lavGæt(ctx));
         });
-
-        app.error(404, ctx -> ctx.status(404));
     }
 
     private static void getAlleSpil(Context ctx) throws Exception {
@@ -72,6 +70,8 @@ public class GalgeRESTServer {
     private static void lavGæt(Context ctx) throws Exception {
         Integer ID = Integer.parseInt(ctx.pathParam("id"));
         String bogstav = ctx.queryParam("bogstav");
+        System.out.println(ID);
+        System.out.println(bogstav);
 
         aktiveSpil.get(ID).gætBogstav(bogstav);
     }
