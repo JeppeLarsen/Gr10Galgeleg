@@ -8,9 +8,6 @@ import java.util.Scanner;
 
 public class GalgeKonsol {
 
-    boolean erSpilVundet = false;
-
-
     public void spil() throws Exception {
         Scanner input = new Scanner(System.in);
 
@@ -37,7 +34,7 @@ public class GalgeKonsol {
 
         String gæt;
 
-        while (!erSpilVundet) {
+        while (!galgeleg.erSpilletSlut()) {
             System.out.println("Ok, PLACEHOLDER. Gæt ordet eller dø:");
             System.out.println(galgeleg.getSynligtOrd());
             System.out.println("CHEATZ: " + galgeleg.getOrdet());
@@ -52,15 +49,11 @@ public class GalgeKonsol {
             }
 
             galgeleg.gætBogstav(gæt);
-
-            if (galgeleg.erSpilletSlut() == true) {
-                erSpilVundet = true;
-
-                System.out.println("Spillet er slut.");
-
-                input.close();
-            }
         }
+
+        System.out.println("Spillet er slut.");
+
+        input.close();
 
     }
 
