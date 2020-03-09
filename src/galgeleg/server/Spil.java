@@ -33,7 +33,7 @@ public class Spil extends UnicastRemoteObject implements SpilI{
             System.out.println("Bruger er autoriseret!");
 
             Galgelogik galgelogik = new Galgelogik();
-            Naming.rebind("rmi://localhost:1099/galgeleg", galgelogik);
+            Naming.rebind("rmi://ec2-18-189-32-7.us-east-2.compute.amazonaws.com:1099/galgeleg", galgelogik);
             System.out.println("Galgeleg registreret.");
 
 

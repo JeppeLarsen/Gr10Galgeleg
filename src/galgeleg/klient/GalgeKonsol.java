@@ -20,10 +20,10 @@ public class GalgeKonsol {
         System.out.println("Indtast kode:");
         String kode = input.nextLine();
 
-        SpilI spil = (SpilI) Naming.lookup("rmi://localhost:1099/spil");
+        SpilI spil = (SpilI) Naming.lookup("rmi://ec2-18-189-32-7.us-east-2.compute.amazonaws.com:1099/spil");
         spil.startSpil(bruger, kode);
 
-        GalgeI galgeleg = (GalgeI) Naming.lookup("rmi://localhost:1099/galgeleg");
+        GalgeI galgeleg = (GalgeI) Naming.lookup("rmi://ec2-18-189-32-7.us-east-2.compute.amazonaws.com:1099/galgeleg");
 
         // setup
         galgeleg.nulstil();
