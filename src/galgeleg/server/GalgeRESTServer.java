@@ -3,23 +3,23 @@ package galgeleg.server;
 import brugerautorisation.data.SpilInfo;
 
 import galgeleg.logik.Galgelogik;
+
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
 import static io.javalin.apibuilder.ApiBuilder.before;
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
-import java.util.HashMap;
-
+import java.util.TreeMap;
 
 public class GalgeRESTServer {
 
-    // private HashMap<int, SpilInfo> aktiveSpil;
+    private static TreeMap<Integer, GalgeI> aktiveSpil = new TreeMap<>();
+    private static Integer nextID = 1;
 
     //TODO: ordentlig exception handling
     public static void main(String[] args) throws Exception {
-        GalgeI galgelogik = new Galgelogik();
-        galgelogik.nulstil();
 
         Javalin app = Javalin.create(config ->
                 config.addStaticFiles("/public"))
@@ -30,18 +30,57 @@ public class GalgeRESTServer {
                     "Server fik " + ctx.method()
                     + " på " + ctx.url()
                     + " med query " + ctx.queryParamMap()));
-            get("/spil", ctx -> getSpil(ctx));
-            get("/spilinfo", ctx -> getSpilInfo(ctx, galgelogik));
-            post("/spilinfo", ctx -> gaet(ctx, galgelogik));
+            get("/spil", ctx -> getAlleSpil(ctx));
+            get("/spil/nyt", ctx -> nytSpil(ctx));
+            get("/spil/:id", ctx -> getSpil(ctx));
+            post("spil/:id", ctx -> lavGæt(ctx));
         });
+
+        app.error(404, ctx -> ctx.status(404));
     }
 
-    private static void getSpil(Context ctx) {
+    private static void getAlleSpil(Context ctx) throws Exception {
+        // Galgelogikkerne konverteres først til SpilInfo-objekter
+        TreeMap<Integer, SpilInfo> aktiveSpilTilstande = new TreeMap<>();
 
+        for (Integer key : aktiveSpil.keySet()) {
+            aktiveSpilTilstande.put(key, getSpilTilstandSomObjekt(key));
+        }
+
+        ctx.json(aktiveSpilTilstande);
     }
 
-    private static void getSpilInfo(Context ctx, GalgeI galgelogik) throws Exception {
+    private static void nytSpil(Context ctx) throws Exception {
+        GalgeI galgelogik = new Galgelogik();
+        aktiveSpil.put(nextID, galgelogik);
+
+        // Det kreerede spils ID returneres
+        ctx.result(nextID.toString());
+
+        nextID++;
+    }
+
+    private static void getSpil(Context ctx) throws Exception {
+        // Få ID'et fra URL'en og hent det relevante spil
+        Integer ID = Integer.parseInt(ctx.pathParam("id"));
+
+        SpilInfo spilInfo = getSpilTilstandSomObjekt(ID);
+
+        ctx.json(spilInfo);
+    }
+
+    private static void lavGæt(Context ctx) throws Exception {
+        Integer ID = Integer.parseInt(ctx.pathParam("id"));
+        String bogstav = ctx.queryParam("bogstav");
+
+        aktiveSpil.get(ID).gætBogstav(bogstav);
+    }
+
+    private static SpilInfo getSpilTilstandSomObjekt(Integer ID) throws Exception {
+        GalgeI galgelogik = aktiveSpil.get(ID);
+
         SpilInfo spilInfo = new SpilInfo(
+                ID,
                 galgelogik.getOrdet(),
                 galgelogik.getSynligtOrd(),
                 galgelogik.getAntalForkerteBogstaver(),
@@ -49,12 +88,6 @@ public class GalgeRESTServer {
                 galgelogik.erSpilletVundet(),
                 galgelogik.erSpilletTabt()
         );
-
-        ctx.json(spilInfo);
-    }
-
-    private static void gaet(Context ctx, GalgeI galgelogik) throws Exception{
-        String bogstav = ctx.queryParam("bogstav");
-        galgelogik.gætBogstav(bogstav);
+        return spilInfo;
     }
 }
