@@ -71,8 +71,6 @@ public class GalgeRESTServer {
     private static void lavGæt(Context ctx) throws Exception {
         Integer ID = Integer.parseInt(ctx.pathParam("id"));
         String bogstav = ctx.queryParam("bogstav");
-        System.out.println(ID);
-        System.out.println(bogstav);
 
         aktiveSpil.get(ID).gætBogstav(bogstav);
     }
