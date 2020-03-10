@@ -1,12 +1,19 @@
 package galgeleg.klient;
 
+
+
 import galgeleg.server.SpilI;
 import galgeleg.server.GalgeI;
+
 
 import java.rmi.Naming;
 import java.util.Scanner;
 
+
+
 public class GalgeKonsol {
+
+
 
     public void spil() throws Exception {
         Scanner input = new Scanner(System.in);
@@ -17,10 +24,10 @@ public class GalgeKonsol {
         System.out.println("Indtast kode:");
         String kode = input.nextLine();
 
-        SpilI spil = (SpilI) Naming.lookup("rmi://localhost:1099/spil");
-        spil.startSpil(bruger, kode);
+        SpilI spil = (SpilI) Naming.lookup("rmi://dist.saluton.dk:9985/spil");
+        String valideretBrugernavn = spil.startSpil(bruger, kode);
 
-        GalgeI galgeleg = (GalgeI) Naming.lookup("rmi://localhost:1099/galgeleg");
+        GalgeI galgeleg = (GalgeI) Naming.lookup("rmi://dist.saluton.dk:9985/galgeleg");
 
         // setup
         galgeleg.nulstil();
@@ -35,7 +42,7 @@ public class GalgeKonsol {
         String gæt;
 
         while (!galgeleg.erSpilletSlut()) {
-            System.out.println("Ok, PLACEHOLDER. Gæt ordet eller dø:");
+            System.out.println("Ok, " + valideretBrugernavn + ". " + "Gæt ordet eller dø:");
             System.out.println(galgeleg.getSynligtOrd());
             System.out.println("CHEATZ: " + galgeleg.getOrdet());
             System.out.println("Gæt: ");
@@ -51,10 +58,13 @@ public class GalgeKonsol {
             galgeleg.gætBogstav(gæt);
         }
 
+
         System.out.println("Spillet er slut.");
 
         input.close();
 
+
     }
+
 
 }
