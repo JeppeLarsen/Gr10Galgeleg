@@ -24,7 +24,7 @@ public class GalgeRESTServer {
         // Setup
         Javalin app = Javalin.create(config ->
                 config.addStaticFiles("/public").enableCorsForAllOrigins())
-                .start(4321);
+                .start(8080);
 
         // Fejlhåndtering
         app.exception(Exception.class, (e, ctx) -> {
