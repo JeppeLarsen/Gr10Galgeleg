@@ -13,7 +13,7 @@ public class Galgeserver {
 
 
         Spil spil = new Spil();
-        Naming.rebind("rmi://ec2-18-189-32-7.us-east-2.compute.amazonaws.com:1099/spil", spil);
+        Naming.rebind("rmi://localhost:1099/spil", spil);
 
 
     }
