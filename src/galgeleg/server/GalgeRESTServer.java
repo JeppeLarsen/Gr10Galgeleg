@@ -19,13 +19,20 @@ public class GalgeRESTServer {
     private static TreeMap<Integer, GalgeI> aktiveSpil = new TreeMap<>();
     private static Integer nextID = 1;
 
-    //TODO: ordentlig exception handling
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
+        // Setup
         Javalin app = Javalin.create(config ->
-                config.addStaticFiles("/public"))
+                config.addStaticFiles("/public").enableCorsForAllOrigins())
                 .start(4321);
 
+        // Fejlhåndtering
+        app.exception(Exception.class, (e, ctx) -> {
+            e.printStackTrace();
+            ctx.result("Serverfejl: " + e.toString());
+        });
+
+        // REST
         app.routes(() -> {
             before(ctx -> System.out.println(
                     "Server fik " + ctx.method()
