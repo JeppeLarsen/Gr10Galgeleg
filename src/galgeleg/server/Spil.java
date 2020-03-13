@@ -28,10 +28,14 @@ public class Spil extends UnicastRemoteObject implements SpilI {
 
         Brugeradmin ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
 
+        String valideretBrugernavn = "ILLEGAL USER. ALARM SET TO DEFCON 1";
+
         try {
             Bruger bruger = ba.hentBruger(brugernavn, adgangskode);
 
             erBrugerAutoriseret = true;
+
+            valideretBrugernavn = bruger.brugernavn;
 
             System.out.println("Bruger er autoriseret!");
 
@@ -45,7 +49,7 @@ public class Spil extends UnicastRemoteObject implements SpilI {
             erBrugerAutoriseret = false;
             Naming.unbind("rmi://localhost:1099/galgeleg");
         }
-        return brugernavn.toString();
+        return valideretBrugernavn;
 
     }
 
